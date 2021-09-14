@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "JS training tasks",
   "scripts": {
-    "lint": "eslint ./**/*.js",
+    "lint": "eslint ./**/*.js --fix",
     "test": "./node_modules/.bin/mocha",
     "test-debug": "./node_modules/.bin/mocha --debug-brk",
     "prepush": "npm run lint && npm test"

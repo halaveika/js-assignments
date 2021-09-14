@@ -52,7 +52,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-  return `Hello, ${firstName} ${lastName}!`
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function  extractNameFromTemplate(value) {
-  return value.slice(7,-1);
+  return value.slice(7, -1);
 }
 
 
@@ -142,7 +142,7 @@ function removeFirstOccurrences(str, value)  {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-  return str.slice(1,-1);
+  return str.slice(1, -1);
 }
 
 
@@ -199,7 +199,9 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  return ('┌' + '─'.repeat(width - 2) + '┐\n') + ('│' + ' '.repeat(width - 2) + '│\n').repeat(height -2) + ('└' + '─'.repeat(width - 2) + '┘\n')
+  const top = ('┌' + '─'.repeat(width - 2) + '┐\n');
+  const bottom = ('└' + '─'.repeat(width - 2) + '┘\n');
+  return  top + ('│' + ' '.repeat(width - 2) + '│\n').repeat(height -2) + bottom ;
 }
 
 
@@ -219,15 +221,15 @@ function getRectangleString(width, height) {
  *          'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
- function encodeToRot13(str) {
+function encodeToRot13(str) {
   const result = str.split('').map(letter => {
     if (letter.charCodeAt(0) >= 65 && letter.charCodeAt(0) <=90){
-      const enqrypt = letter.charCodeAt(0) + 13
+      const enqrypt = letter.charCodeAt(0) + 13;
       return (enqrypt > 90) ? (enqrypt -26) : enqrypt;}
     if (letter.charCodeAt(0) >= 97 && letter.charCodeAt(0) <=122){
-      const enqrypt = letter.charCodeAt(0) + 13
+      const enqrypt = letter.charCodeAt(0) + 13;
       return (enqrypt > 122) ? (enqrypt -26) : enqrypt;}
-    return letter.charCodeAt(0)
+    return letter.charCodeAt(0);
   });
   return String.fromCharCode(...result);
 }
@@ -245,8 +247,8 @@ function getRectangleString(width, height) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
- function isString(value) {
-  return ( typeof value === 'string') || ( value instanceof String)
+function isString(value) {
+  return ( typeof value === 'string') || ( value instanceof String);
 }
 
 
@@ -275,10 +277,10 @@ function getRectangleString(width, height) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
- function getCardId(value) {
-  const suitValue = {'♣': 0,'♦': 13,'♥': 26,'♠': 39}
-  const cardValue = {'A': 0,'J': 10,'Q': 11,'K': 12}
-  return (+value.slice(0,-1)) ? ( value.slice(0,-1) - 1 + suitValue[value.slice(-1)] ) : ( cardValue[value.slice(0,-1)] + suitValue[value.slice(-1)] )
+function getCardId(value) {
+  const x = {'♣': 0, '♦': 13, '♥': 26, '♠': 39, 'A': 0, 'J': 10, 'Q': 11, 'K': 12 };
+  const card = value.slice(0, -1);
+  return (+card) ? ( card - 1 + x[value.slice(-1)] ) : ( x[card] + x[value.slice(-1)] );
 }
 
 module.exports = {
