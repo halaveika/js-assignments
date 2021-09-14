@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/halaveika/js-assignments.svg?branch=master)](https://travis-ci.org/halaveika/js-assignments)
+[![Build Status](https://travis-ci.com/halaveika/js-assignments.svg?branch=master)](https://travis-ci.com/halaveika/js-assignments)
 ![Hackage-Deps](https://img.shields.io/hackage-deps/v/lens.svg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/halaveika/js-assignments.svg)](https://greenkeeper.io/)
 [![GitHub release](https://img.shields.io/github/release/halaveika/js-assignments.svg)](https://github.com/halaveika/js-assignments/releases/latest)
