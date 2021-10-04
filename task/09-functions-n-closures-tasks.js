@@ -25,7 +25,7 @@
  *
  */
 function getComposition(f, g) {
-  return x => {return  f(g(x));}
+  return x => {return  f(g(x));};
 }
 
 
@@ -46,7 +46,7 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
-  return x => {return  Math.pow(x,exponent);}
+  return x => {return  Math.pow(x, exponent);};
 }
 
 
@@ -63,11 +63,11 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom(a=0,b=0,c=0) {
-  if(!a && !b && !c){ return () => {return null}}
-  if(a && !b && !c){ return () => {return a}}
-  if(a && b && !c){ return (x) => {return a*x + b}}
-  if(a && b && c){ return (x) => {return a*Math.pow(x,2) + b*x + c}}
+function getPolynom(a=0, b=0, c=0) {
+  if(!a && !b && !c){ return () => {return null;};}
+  if(a && !b && !c){ return () => {return a;};}
+  if(a && b && !c){ return x => {return a*x + b;};}
+  if(a && b && c){ return x => {return a*Math.pow(x, 2) + b*x + c;};}
 }
 
 
@@ -86,12 +86,12 @@ function getPolynom(a=0,b=0,c=0) {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-  let cache = new Map();
+  const cache = new Map();
   return function(x) {
     if (cache.has(x)) {
       return cache.get(x);
     }
-    let result = func(x);
+    const result = func(x);
     cache.set(x, result);
     return result;
   };
@@ -115,11 +115,11 @@ function memoize(func) {
  */
 function retry(func, attempts) {
   throw new Error('Not implemented');
-  try {
-    return func()
-  } catch (error) {
-    return retry(func, attempts-1) ;
-  }
+  // try {
+  //   return func();
+  // } catch (error) {
+  //   return retry(func, attempts-1) ;
+  // }
 
 }
 
@@ -149,7 +149,7 @@ function retry(func, attempts) {
  */
 function logger(func, logFunc) {
   throw new Error('Not implemented');
-  return (x) => {return func(logFunc(x))}
+  // return x => {return func(logFunc(x));};
 }
 
 
@@ -169,7 +169,7 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn) {
- return (...args) => fn.call(this, ...[...arguments].slice(1), ...args);
+  return (...args) => fn.call(this, ...[...arguments].slice(1), ...args);
 }
 
 
@@ -192,9 +192,9 @@ function partialUsingArguments(fn) {
  */
 function getIdGeneratorFunction(startFrom) {
   throw new Error('Not implemented');
-  return function* () {
-    return yield startFrom++;
-  }
+  // return function* () {
+  //   return yield startFrom++;
+  // };
 }
 
 module.exports = {

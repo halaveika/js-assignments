@@ -25,7 +25,7 @@ function Rectangle(width, height) {
   this.width = width;
   this.height = height;
   this.getArea = function() {
-    return this.width * this.height
+    return this.width * this.height;
   };
 }
 
@@ -58,9 +58,9 @@ function getJSON(obj) {
  */
 function fromJSON(proto, json) {
   throw new Error('Not implemented');
-  var obj = JSON.parse(json);
-  Object.setPrototypeOf(obj, proto);
-  return Object.assign({},obj);
+  // var obj = JSON.parse(json);
+  // Object.setPrototypeOf(obj, proto);
+  // return Object.assign({}, obj);
 }
 
 
@@ -119,44 +119,44 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
- const cssSelectorBuilder = {
+const cssSelectorBuilder = {
   resultSelector: [],
 
   element(value) {
-   this.resultSelector.push(value);
-   return this
+    this.resultSelector.push(value);
+    return this;
   },
 
   id(value) {
     this.resultSelector.push(`#${value}`);
-    return this
+    return this;
   },
 
   class(value) {
     this.resultSelector.push(`.${value}`);
-    return this
+    return this;
   },
 
   attr(value) {
     this.resultSelector.push(`[${value}]`);
-    return this
+    return this;
   },
 
   pseudoClass(value) {
     this.resultSelector.push(`:${value}`);
-    return this
+    return this;
   },
 
   pseudoElement(value) {
     this.resultSelector.push(`::${value}`);
-    return this
+    return this;
   },
 
   combine(selector1, combinator, selector2) {
     throw new Error('Not implemented');
-    console.dir(Object.assign({},selector1));
-    console.dir(Object.assign({},selector2));
-    return this
+    // console.dir(Object.assign({}, selector1));
+    // console.dir(Object.assign({}, selector2));
+    // return this;
   },
 
   stringify(){

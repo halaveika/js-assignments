@@ -16,25 +16,25 @@
  *  ]
  */
 function createCompassPoints(sides = ['N', 'E', 'S', 'W']) {
-  let result = new Array(32)
-  sides.forEach((value, idx) => result[idx * 8] = value)
+  const result = new Array(32);
+  sides.forEach((value, idx) => result[idx * 8] = value);
   function rec_travel(start_str, finish_str, start_pos, finish_pos) {
-      let medium_pos = (finish_pos + start_pos) / 2;
-      if (!Number.isInteger(medium_pos))
-          return;
-      let medium_str = start_str + finish_str;
-      if (medium_str.length > 3) {
-          let main_idx = (finish_pos - start_pos > 0 ? Math.ceil : Math.trunc)(medium_pos / 8) % 4;
-          medium_str = start_str + 'b' + sides[main_idx];
-      }
-      if (!result[medium_pos]) {
-          result[medium_pos] = medium_str;
-      }
-      rec_travel(start_str, result[medium_pos], start_pos, medium_pos)
-      rec_travel(finish_str, result[medium_pos], finish_pos, medium_pos)
+    const medium_pos = (finish_pos + start_pos) / 2;
+    if (!Number.isInteger(medium_pos))
+    {return;}
+    let medium_str = start_str + finish_str;
+    if (medium_str.length > 3) {
+      const main_idx = (finish_pos - start_pos > 0 ? Math.ceil : Math.trunc)(medium_pos / 8) % 4;
+      medium_str = start_str + 'b' + sides[main_idx];
+    }
+    if (!result[medium_pos]) {
+      result[medium_pos] = medium_str;
+    }
+    rec_travel(start_str, result[medium_pos], start_pos, medium_pos);
+    rec_travel(finish_str, result[medium_pos], finish_pos, medium_pos);
   }
   rec_travel('N', 'N', 0, 32);
-  return result.map((abbr, idx) =>{return { abbreviation : abbr, azimuth : 11.25 * idx}});
+  return result.map((abbr, idx) =>{return { abbreviation : abbr, azimuth : 11.25 * idx};});
 }
 
 
@@ -74,24 +74,27 @@ function createCompassPoints(sides = ['N', 'E', 'S', 'W']) {
  */
 function* expandBraces(str) {
   const re =/{((?:[^{}]|{{[^}]*}})*)}/;
-  function replaceAndAddStrings(str,re) {
-      const pattern= str.match(re)[0];
-      return str.match(re)[1].split(',').map((element) => str.replace(pattern,element));
+  function replaceAndAddStrings(str, re) {
+    const pattern= str.match(re)[0];
+    return str.match(re)[1].split(',').map(element => str.replace(pattern, element));
   }
   let result = [str];
-  while(true){
-    let turnResult = result.map(e => re.test(e) ? replaceAndAddStrings(e,re) : e).flat();
+  let isTrue = true;
+  while(isTrue){
+    const turnResult = result.map(e => re.test(e) ? replaceAndAddStrings(e, re) : e).flat();
     if (result.length === turnResult.length) {
       result = turnResult;
-      break;
+      isTrue =false;
+    } else{
+      result = turnResult;
     }
-    result = turnResult;
+
   }
   const uniq = [...new Set(result)];
-  for (let i of uniq){
+  for (const i of uniq){
     yield i;
   }
-};
+}
 
 
 
@@ -124,9 +127,6 @@ function* expandBraces(str) {
  *
  */
 function getZigZagMatrix(n) {
-  const height = n;
-  const width = n;
-
   const mtx = [];
   for (let i = 0; i < n; i++){
     mtx[i] = [];
@@ -134,14 +134,14 @@ function getZigZagMatrix(n) {
   let i=1, j=1;
   for (let e = 0; e < n*n; e++) {
     mtx[i-1][j-1] = e;
-    if ((i + j) % 2 == 0) {
-        if (j < n) j ++;
-        else       i += 2;
-        if (i > 1) i --;
+    if ((i + j) % 2 === 0) {
+      if (j < n) j ++;
+      else       i += 2;
+      if (i > 1) i --;
     } else {
-        if (i < n) i ++;
-        else       j += 2;
-        if (j > 1) j --;
+      if (i < n) i ++;
+      else       j += 2;
+      if (j > 1) j --;
     }
   }
   return mtx;
@@ -169,44 +169,48 @@ function getZigZagMatrix(n) {
  * [[0,0], [0,1], [1,1], [0,2], [1,2], [2,2], [0,3], [1,3], [2,3], [3,3]] => false
  *
  */
- function canDominoesMakeRow(dominoes) {
-  const a = dominoes.map((element) => element.sort((a,b)=>a-b)).sort((a,b)=> (a[0] === b[0]) ? a[1] - b[1] : a[0] - b[0]);
+function canDominoesMakeRow(dominoes) {
+  const a = dominoes
+    .map(element => element
+      .sort((a, b)=>a-b))
+    .sort((a, b)=> (a[0] === b[0]) ? a[1] - b[1] : a[0] - b[0]);
   const b = a.slice();
-  const objectA = a.reduce((accum,value)=>{(accum[value[0]]===undefined) ? accum[value[0]] = 1 : accum[value[0]] +=1; return accum},{});
-  const objectB = b.reduce((accum,value)=>{(accum[value[1]]===undefined) ? accum[value[1]] = 1 : accum[value[1]] +=1; return accum},{});
-  let withoutPare = [];
-  for (let i in objectA){
+  const objectA = a.reduce((accum, value)=>{
+    (accum[value[0]]===undefined) ? accum[value[0]] = 1 : accum[value[0]] +=1; return accum;}, {});
+  const objectB = b.reduce((accum, value)=>{
+    (accum[value[1]]===undefined) ? accum[value[1]] = 1 : accum[value[1]] +=1; return accum;}, {});
+  const withoutPare = [];
+  for (const i in objectA){
     if(objectA[i]%2 !==0) {withoutPare.push(i);}
   }
-  for (let i in objectB){
+  for (const i in objectB){
     if(objectB[i]%2 !==0) {withoutPare.push(i);}
   }
   const firstDomino = withoutPare
-  .sort((a,b) => a-b)
-  .join('')
-  .replace(/(.)\1/g,'')
-  .split('')
-  .map(e=>Number(e))
-  .map(item => dominoes
-  .flat()
-  .filter(element=> element === item))
-  .sort((a,b)=>a.length-b.length)
-  .flat()[0];
+    .sort((a, b) => a-b)
+    .join('')
+    .replace(/(.)\1/g, '')
+    .split('')
+    .map(e=>Number(e))
+    .map(item => dominoes
+      .flat()
+      .filter(element=> element === item))
+    .sort((a, b)=>a.length-b.length)
+    .flat()[0];
   const result = [];
   const startArr = dominoes.slice();
-  dominoes.find(element => element[0]===firstDomino || element[1]===firstDomino )
+  dominoes.find(element => element[0]===firstDomino || element[1]===firstDomino );
   function findDomino(number){
     const i = startArr.findIndex(element => element[0] === number || element[1] === number);
-    if (i === -1) {return false}
-    const x = startArr.splice(i,1).flat();
+    if (i === -1) {return false;}
+    const x = startArr.splice(i, 1).flat();
     (x[0] === number) ? result.push(x) : result.push(x.reverse());
     return true;
-  };
-
+  }
   findDomino(firstDomino);
-  while (true){
-    const isTrue = findDomino(result[result.length-1][1]);
-    if(!isTrue){break}
+  let isTrue = true;
+  while (isTrue){
+    isTrue = findDomino(result[result.length-1][1]);
   }
   return (startArr.length) ? false : true;
 }
@@ -235,10 +239,10 @@ function getZigZagMatrix(n) {
  */
 function extractRanges(nums) {
   return nums
-  .map((e,i,arr)=> (i !==0 && i !==arr.length -1 &&  arr[i+1]===e+1 && arr[i-1]===e-1 ) ? '-' : e)
-  .filter((e,i,arr)=> ( i !==0) ? (arr[i-1] === e) ? false : true : true)
-  .join()
-  .replace(/(,-,)/g,'-')
+    .map((e, i, arr)=> (i !==0 && i !==arr.length -1 &&  arr[i+1]===e+1 && arr[i-1]===e-1 ) ? '-' : e)
+    .filter((e, i, arr)=> ( i !==0) ? (arr[i-1] === e) ? false : true : true)
+    .join()
+    .replace(/(,-,)/g, '-');
 }
 
 module.exports = {

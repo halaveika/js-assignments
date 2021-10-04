@@ -24,7 +24,7 @@
     "no-restricted-syntax": 1,
     "no-sparse-arrays": 0,
     "no-unreachable": 2,
-    "no-unused-expressions": 2,
+    "no-unused-expressions": "off",
     "no-unused-vars": [2, {"args": "none"}],
     "semi": 2,
     "quotes": [

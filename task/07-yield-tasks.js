@@ -34,14 +34,21 @@
 function* get99BottlesOfBeer() {
   let index = 99;
   while(index > 0) {
-      yield `${(index > 0) ? index : 'No more'} ${(index > 1) ? 'bottles' : 'bottle'} of beer on the wall, ${(index > 0) ? index : 'no more'} ${(index > 1) ? 'bottles' : 'bottle'} of beer.`;
-      yield `Take one down and pass it around, ${(--index > 0) ? index : 'no more'} ${(index > 1) ? 'bottles' : (index === 1) ? 'bottle' : 'bottles'} of beer on the wall.`;
-      if(index === 0) {
-        yield 'No more bottles of beer on the wall, no more bottles of beer.';
-        yield 'Go to the store and buy some more, 99 bottles of beer on the wall.';}
+    yield `${(index > 0)
+      ? index : 'No more'} ${
+      (index > 1) ? 'bottles' : 'bottle'} of beer on the wall, ${
+      (index > 0) ? index : 'no more'} ${
+      (index > 1) ? 'bottles' : 'bottle'} of beer.`;
+    yield `Take one down and pass it around, ${
+      (--index > 0) ? index : 'no more'} ${
+      (index > 1) ? 'bottles' :
+        (index === 1) ? 'bottle' : 'bottles'} of beer on the wall.`;
+    if(index === 0) {
+      yield 'No more bottles of beer on the wall, no more bottles of beer.';
+      yield 'Go to the store and buy some more, 99 bottles of beer on the wall.';}
   }
 
-};
+}
 
 
 
@@ -63,7 +70,7 @@ function* getFibonacciSequence() {
   let index = 3;
   while(index <= 39) {
     yield (currentValue+previosValue);
-    [currentValue,previosValue]=[previosValue+currentValue,currentValue];
+    [currentValue, previosValue]=[previosValue+currentValue, currentValue];
     index++;
   }
 }
