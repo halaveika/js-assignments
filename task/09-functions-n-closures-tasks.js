@@ -25,7 +25,7 @@
  *
  */
 function getComposition(f, g) {
-  throw new Error('Not implemented');
+  return x => {return  f(g(x));}
 }
 
 
@@ -46,7 +46,7 @@ function getComposition(f, g) {
  *
  */
 function getPowerFunction(exponent) {
-  throw new Error('Not implemented');
+  return x => {return  Math.pow(x,exponent);}
 }
 
 
@@ -63,8 +63,11 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(a=0,b=0,c=0) {
+  if(!a && !b && !c){ return () => {return null}}
+  if(a && !b && !c){ return () => {return a}}
+  if(a && b && !c){ return (x) => {return a*x + b}}
+  if(a && b && c){ return (x) => {return a*Math.pow(x,2) + b*x + c}}
 }
 
 
@@ -83,7 +86,15 @@ function getPolynom() {
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
 function memoize(func) {
-  throw new Error('Not implemented');
+  let cache = new Map();
+  return function(x) {
+    if (cache.has(x)) {
+      return cache.get(x);
+    }
+    let result = func(x);
+    cache.set(x, result);
+    return result;
+  };
 }
 
 
@@ -103,7 +114,13 @@ function memoize(func) {
  * retryer() => 2
  */
 function retry(func, attempts) {
-  throw new Error('Not implemented');     
+  throw new Error('Not implemented');
+  try {
+    return func()
+  } catch (error) {
+    return retry(func, attempts-1) ;
+  }
+
 }
 
 
@@ -132,7 +149,10 @@ function retry(func, attempts) {
  */
 function logger(func, logFunc) {
   throw new Error('Not implemented');
+  return (x) => {return func(logFunc(x))}
 }
+
+
 
 
 /**
@@ -149,12 +169,12 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
 function partialUsingArguments(fn) {
-  throw new Error('Not implemented');
+ return (...args) => fn.call(this, ...[...arguments].slice(1), ...args);
 }
 
 
 /**
- * Returns the id generator function that returns next integer starting from specified 
+ * Returns the id generator function that returns next integer starting from specified
  * number every time when invoking.
  *
  * @param {Number} startFrom
@@ -172,6 +192,9 @@ function partialUsingArguments(fn) {
  */
 function getIdGeneratorFunction(startFrom) {
   throw new Error('Not implemented');
+  return function* () {
+    return yield startFrom++;
+  }
 }
 
 module.exports = {
