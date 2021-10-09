@@ -24,7 +24,7 @@
 function Rectangle(width, height) {
   this.width = width;
   this.height = height;
-  this.getArea = function() {
+  Rectangle.prototype.getArea = function() {
     return this.width * this.height;
   };
 }
@@ -57,12 +57,8 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-  throw new Error('Not implemented');
-  // var obj = JSON.parse(json);
-  // Object.setPrototypeOf(obj, proto);
-  // return Object.assign({}, obj);
+  return  JSON.parse(json, (k, v) => (typeof v === 'object') ? Object.assign(Object.create(proto), v) : v);
 }
-
 
 /**
  * Css selectors builder

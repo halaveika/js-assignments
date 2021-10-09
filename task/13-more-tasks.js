@@ -12,7 +12,10 @@
  *   'abcdefghijklmnop',  'lmnopqrstuvwxyz'  => 'abcdefghijklmnopqrstuvwxyz'
  */
 function distinctLettersString(value1, value2) {
-  throw new Error('Not implemented');
+  return [...value1, ...value2 ]
+    .sort((a, b)=> a.localeCompare(b))
+    .reduce((accum, v, i, arr)=> { if (i>0){( v !== arr[i - 1]) ? accum+=v : accum;}
+    else {accum = v;} return accum;}, '' );
 }
 
 
@@ -29,7 +32,9 @@ function distinctLettersString(value1, value2) {
  */
 
 function lowerLetters(value) {
-  throw new Error('Not implemented');
+  return [...value.match(/[a-z]/g)]
+    .sort((a, b)=> a.localeCompare(b))
+    .reduce((accum, value)=>{accum[value] = (accum[value] | 0 ) + 1 ; return accum;}, {});
 }
 
 /**
@@ -45,13 +50,22 @@ function lowerLetters(value) {
  * @return {string}
  *
  * @example
- *    'a clash if KINGS', 'a an the of'  =>  'A Clash of Kings'
+ *    'a clash of KINGS', 'a an the of'  =>  'A Clash of Kings'
  *    'THE WIND IN THE WILLOWS', 'The In'  => 'The Wind in the Willows'
  *    'the quick brown fox'  => 'The Quick Brown Fox'
  */
 
 function titleCaseConvert(title, minorWords) {
-  throw new Error('Not implemented');
+  const original = title.split(' ').map(e => e.toLowerCase());
+  let minor = (minorWords) ? minorWords.split(' ').map(e => e.toLowerCase()) : minorWords;
+  if(minor) {minor =  minor.filter(e =>  (original.find(i => i === e)) ? true : false);}
+  if (minor) {
+    return original.map(e => e.replace(e[0], e[0].toUpperCase()))
+      .map(e => (minor.find(i => i.toLowerCase() === e.toLowerCase())) ? e.replace(e[0], e[0].toLowerCase()) : e )
+      .map((e, i)=> (i===0) ? e.replace(e[0], e[0].toUpperCase()) : e).join(' ');
+  }
+  return original.map(e => e.replace(e[0], e[0].toUpperCase()))
+    .map((e, i)=> (i===0) ? e.replace(e[0], e[0].toUpperCase()) : e).join(' ');
 }
 
 /**
@@ -72,7 +86,35 @@ function titleCaseConvert(title, minorWords) {
  */
 
 function calcRPN(expr) {
-  throw new Error('Not implemented');
+  const str = expr.split(' ').map(e => (Number(e)) ? Number(e) : e);
+  const stack =[];
+  if(str === ''){
+    return 0;
+  }
+
+  for(let i=0; i<str.length; i++) {
+    if(!isNaN(str[i])) {
+      stack.push(str[i]);
+    }else {
+      const a = stack.pop();
+      const b = stack.pop();
+      if(str[i] === '+') {
+        stack.push(a + b);
+      } else if(str[i] === '-') {
+        stack.push(b - a);
+      } else if(str[i] === '*') {
+        stack.push(a * b);
+      } else if(str[i] === '/') {
+        stack.push(b / a);
+      }
+    }
+  }
+
+  if(stack.length > 1) {
+    return stack[stack.length - 1];
+  }else {
+    return stack[0];
+  }
 }
 
 module.exports = {

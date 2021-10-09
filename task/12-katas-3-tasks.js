@@ -28,7 +28,70 @@
  *   'NULL'      => false
  */
 function findStringInSnakingPuzzle(puzzle, searchStr) {
-  throw new Error('Not implemented');
+
+  const vectors = [
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [0, -1]
+  ];
+
+  const n = puzzle.length;
+  const m = puzzle[0].length;
+
+  const visited = createZeroMatrix(n, m);
+
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if (puzzle[i][j] === searchStr[0]) {
+        visited[i][j] = 1;
+        if (findStrOnPuzzle(puzzle, searchStr, i, j, visited, 1)) {
+          return true;
+        }
+        visited[i][j] = 0;
+      }
+    }
+  }
+
+  return false;
+
+  function findStrOnPuzzle(puzzle, searchStr, x, y, visited, wordIndex) {
+    const n = puzzle.length;
+    const m = puzzle[0].length;
+
+    if (wordIndex === searchStr.length) {
+      return true;
+    }
+
+    for (let i = 0; i < vectors.length; i++) {
+      const [nx, ny] = [
+        x + vectors[i][0],
+        y + vectors[i][1]
+      ];
+
+      if (nx >= 0 && nx < n && ny >= 0 && ny < m &&
+          !visited[nx][ny] &&
+          puzzle[nx][ny] === searchStr[wordIndex]) {
+        visited[nx][ny] = 1;
+        if (findStrOnPuzzle(puzzle, searchStr, nx, ny, visited, wordIndex + 1)) {
+          return true;
+        }
+        visited[nx][ny] = 0;
+      }
+    }
+
+    return false;
+  }
+
+
+  function createZeroMatrix(n, m) {
+    const matrix = [];
+    for (let i = 0; i < n; i++) {
+      matrix.push(new Array(m).fill(0));
+    }
+    return matrix;
+  }
+
 }
 
 
@@ -46,7 +109,28 @@ function findStringInSnakingPuzzle(puzzle, searchStr) {
  *    'abc' => 'abc','acb','bac','bca','cab','cba'
  */
 function* getPermutations(chars) {
-  throw new Error('Not implemented');
+  function getPermutationsRecurs(chars){
+    if (chars.length < 2 ){
+      return chars;
+    }
+    const permutationsArray = [];
+
+    for (let i = 0; i < chars.length; i++){
+      const char = chars[i];
+      if (chars.indexOf(char) !== i)
+      {continue;}
+
+      const remainingChars = chars.slice(0, i) + chars.slice(i + 1, chars.length);
+
+      for (const permutation of getPermutationsRecurs(remainingChars)){
+        permutationsArray.push(char + permutation); }
+    }
+    return permutationsArray;
+  }
+  const resultArr = getPermutationsRecurs(chars);
+  for (let i=0; i < resultArr.length; i++ ){
+    yield resultArr[i];
+  }
 }
 
 
@@ -68,7 +152,15 @@ function* getPermutations(chars) {
  *    [ 1, 6, 5, 10, 8, 7 ] => 18  (buy at 1,6,5 and sell all at 10)
  */
 function getMostProfitFromStockQuotes(quotes) {
-  throw new Error('Not implemented');
+  let profit = 0;
+  let max = quotes[quotes.length - 1];
+  for(let i = quotes.length - 2; i>= 0; i-- ){
+    max = Math.max(max, quotes[i]);
+    if(quotes[i] < max) {
+      profit += max - quotes[i];
+    }
+  }
+  return profit;
 }
 
 
@@ -95,10 +187,14 @@ function UrlShortener() {
 UrlShortener.prototype = {
   encode(url) {
     throw new Error('Not implemented');
+    // const asciArr = url.split('').map((el => el.charCodeAt(0))).join('');
+    // return parseInt(asciArr, 10);
   },
 
   decode(code) {
     throw new Error('Not implemented');
+    // const charcodeArr= parseInt(code, 10).toString(10).match(/.{1,2}/g).map(e=>Number(e));
+    // return String.fromCharCode(charcodeArr);
   }
 };
 

@@ -36,7 +36,22 @@
  *
  */
 function parseBankAccount(bankAccount) {
-  throw new Error('Not implemented');
+  const digits = new Map();
+  digits.set(' _ | ||_|', 0);
+  digits.set('     |  |', 1);
+  digits.set(' _  _||_ ', 2);
+  digits.set(' _  _| _|', 3);
+  digits.set('   |_|  |', 4);
+  digits.set(' _ |_  _|', 5);
+  digits.set(' _ |_ |_|', 6);
+  digits.set(' _   |  |', 7);
+  digits.set(' _ |_||_|', 8);
+  digits.set(' _ |_| _|', 9);
+  function parser(str, i) {
+    return str.slice(3*i, 3*i+3)+str.slice(3*i+28, 3*i+31)+str.slice(3*i+56, 3*i+59);
+  }
+  const result = Array(10).fill(0).map((e, i) => digits.get((parser(bankAccount, i)))).join('');
+  return Number(result);
 }
 
 
@@ -68,7 +83,26 @@ function parseBankAccount(bankAccount) {
  *      'characters.'
  */
 function* wrapText(text, columns) {
-  throw new Error('Not implemented');
+  const result =[];
+  function reqParse(str, index=columns){
+    if(str==='') { return true; }
+    let checkedSymbol;
+    (str.length > index) ? checkedSymbol = str[index] : checkedSymbol = str[str.length-1];
+    if (checkedSymbol ===' ' || checkedSymbol ===',' || checkedSymbol ==='.') {
+      if(str.length < index+1) {
+        result.push(str.trim());
+        str ='';
+      } else {
+        result.push(str.slice(0, index+1).trim());
+        str = str.slice(index+1);
+      }
+    } else {return reqParse(str, index - 1);}
+    return reqParse(str);
+  }
+  reqParse(text, columns);
+  while (result.length){
+    yield result.shift();
+  }
 }
 
 
@@ -105,9 +139,71 @@ const PokerRank = {
 };
 
 function getPokerHandRank(hand) {
-  throw new Error('Not implemented');
-}
+  const x = hand.slice();
+  const cardRank = new Map([
+    ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6],
+    ['7', 7], ['8', 8], ['9', 9], ['10', 10],
+    ['J', 11], ['Q', 12], ['K', 13], ['A', 14]]);
 
+
+  function sortHand(hand){
+    return hand.sort((a, b)=>
+      cardRank.get((a.length ===2)? a[0] : a[0]+a[1]) - cardRank.get((b.length ===2)? b[0] : b[0]+b[1]));
+  }
+
+  function skipSuit(hand){
+    return hand.map(card=> (card.length ===2) ? card[0] : card[0]+card[1]);
+  }
+
+  function isFlush(hand){
+    const check=hand.filter((v, i, arr)=> arr[0].slice(-1) === v.slice(-1));
+    return (hand.length === check.length) ? true : false;
+  }
+
+  function checkStraight(hand){
+    const pattern = skipSuit(sortHand(hand));
+    const searchString = Array.from(cardRank.keys()).concat(Array.from(cardRank.keys())).join('');
+    if(cardRank.get(pattern[pattern.length-1]) === 14 && cardRank.get(pattern[0])===2) {
+      const pattern2 = pattern.slice(-1).concat(pattern.slice(0, -1)).join('');
+      const result = searchString.search(pattern.join(''));
+      const result2 = searchString.search(pattern2);
+      return (result !==-1 || result2 !==-1 ) ? true : false;
+    }
+    const result = searchString.search(pattern.join(''));
+    return (result !==-1) ? true : false;
+  }
+
+  function checkStraightFlush(hand){
+    const isStraight = checkStraight(hand);
+    const flush = isFlush(hand);
+    return (isStraight && flush) ? true : false;
+  }
+
+  function cardCount(hand){
+    const r = skipSuit(hand).
+      reduce((acc, value)=> {acc[cardRank.get(value)] = (acc[cardRank.get(value)] || 0) + 1; return acc; }, {});
+    const value = Object.values(r).sort((a, b)=>b-a);
+    switch (value[0]) {
+    case 4: return PokerRank.FourOfKind;
+    case 3: if(value[1]===2) {return PokerRank.FullHouse;} else{return PokerRank.ThreeOfKind;}
+    case 2: if(value[1]===2) {return PokerRank.TwoPairs;} else{return PokerRank.OnePair;}
+    case 1: return PokerRank.HighCard;
+    default:
+      return 0;
+    }
+  }
+
+  if (checkStraightFlush(x)) {return PokerRank.StraightFlush;}
+  else if (cardCount(x) ===7) {return PokerRank.FourOfKind;}
+  else if (cardCount(x) ===6) {return PokerRank.FullHouse;}
+  else if (isFlush(x)) {return PokerRank.Flush;}
+  else if (checkStraight(x)) {return PokerRank.Straight;}
+  else if (cardCount(x) ===3) {return PokerRank.ThreeOfKind;}
+  else if (cardCount(x) ===2) {return PokerRank.TwoPairs;}
+  else if (cardCount(x) ===1) {return PokerRank.OnePair;}
+
+  return PokerRank.HighCard;
+}
 
 /**
  * Returns the rectangles sequence of specified figure.
@@ -136,7 +232,7 @@ function getPokerHandRank(hand) {
  *    '   +-----+     \n'+
  *    '   |     |     \n'+                                    '+-------------+\n'+
  *    '+--+-----+----+\n'+              '+-----+\n'+          '|             |\n'+
- *    '|             |\n'+      =>      '|     |\n'+     ,    '|             |\n'+
+ *    '|             |\n'+    s  =>      '|     |\n'+     ,    '|             |\n'+
  *    '|             |\n'+              '+-----+\n'           '+-------------+\n'
  *    '+-------------+\n'
  */

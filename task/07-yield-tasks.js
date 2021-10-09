@@ -106,42 +106,73 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
+  // yield root;
+  // let i = 0;
+  // while (i < 9){
+  //   const node = root.children[i];
+  //   console.log(root.children[i]);
+  //   if(node.n===2){
+  //     yield node;
+  //     if(node.n===3) {yield node}
+  //       else if(node.n===4) {yield node;
+  //         if(node.n ===5) yield node
+  //       }
+  //   }
+  //     else if(node.n===2){
+  //       yield node
+  //     } else if(node.n===7){
+  //       yield node
+  //       if(node.n===8) {yield node}
+  //     }
+
+  //     }
+
+
+
+
+
+
+
+
+
+
+
   // const node1 = { n:1 }, node2 = { n:2 }, node3 = { n:3 }, node4 = { n:4 },
-//         node5 = { n:5 }, node6 = { n:6 }, node7 = { n:7 }, node8 = { n:8 };
-//   node1.children = [ node2, node6, node7 ];
-//   node2.children = [ node3, node4 ];
-//   node4.children = [ node5 ];
-//   node7.children = [ node8 ];
-//   yield node1;
-//   let i = 0;
-//   if (root.children.length > 2){
-//     while (i < 9){
-//       const node = root.children[i++];
-//       console.log(node.n);
-//       if (node.n===2){node2.children =node.children;yield node2;}
-//       if (node.n===3){node3.children = node.children;yield node3;}
-//       if (node.n===4){node4.children = node.children;yield node4;}
-//       if (node.n===5){node5.children = node.children;yield node5;}
-//       if (node.n===6){node6.children = node.children;yield node6;}
-//       if (node.n===7){node7.children = node.children;yield node7;}
-//       if (node.n===8){node8.children = node.children;yield node8;}
-//     }
-//   } else {
-//     let node = root;
-//     while (i < 9){
-//       node = node.children[0];
-//       console.log(i++);
-//       console.log(node);
-//       if (node.n===2){node2.children =node.children;yield node2;}
-//       if (node.n===3){node3.children = node.children;yield node3;}
-//       if (node.n===4){node4.children = node.children;yield node4;}
-//       if (node.n===5){node5.children = node.children;yield node5;}
-//       if (node.n===6){node6.children = node.children;yield node6;}
-//       if (node.n===7){node7.children = node.children;yield node7;}
-//       if (node.n===8){node8.children = node.children;yield node8;}
-//       if (node.n>8){node8.children.push(node.children);yield node8;}
-//     }
-//   }
+  //       node5 = { n:5 }, node6 = { n:6 }, node7 = { n:7 }, node8 = { n:8 };
+  // node1.children = [ node2, node6, node7 ];
+  // node2.children = [ node3, node4 ];
+  // node4.children = [ node5 ];
+  // node7.children = [ node8 ];
+  // yield node1;
+  // let i = 0;
+  // if (root.children.length > 2){
+  //   while (i < 9){
+  //     const node = root.children[i++];
+  //     console.log(node.n);
+  //     if (node.n===2){node2.children =node.children;yield node2;}
+  //     if (node.n===3){node3.children = node.children;yield node3;}
+  //     if (node.n===4){node4.children = node.children;yield node4;}
+  //     if (node.n===5){node5.children = node.children;yield node5;}
+  //     if (node.n===6){node6.children = node.children;yield node6;}
+  //     if (node.n===7){node7.children = node.children;yield node7;}
+  //     if (node.n===8){node8.children = node.children;yield node8;}
+  //   }
+  // } else {
+  //   let node = root;
+  //   while (i < 9){
+  //     node = node.children[0];
+  //     console.log(i++);
+  //     console.log(node);
+  //     if (node.n===2){node2.children =node.children;yield node2;}
+  //     if (node.n===3){node3.children = node.children;yield node3;}
+  //     if (node.n===4){node4.children = node.children;yield node4;}
+  //     if (node.n===5){node5.children = node.children;yield node5;}
+  //     if (node.n===6){node6.children = node.children;yield node6;}
+  //     if (node.n===7){node7.children = node.children;yield node7;}
+  //     if (node.n===8){node8.children = node.children;yield node8;}
+  //     if (node.n>8){node8.children.push(node.children);yield node8;}
+  //   }
+  // }
   throw new Error('Not implemented');
 }
 
@@ -189,14 +220,18 @@ function* breadthTraversalTree(root) {
  */
 function* mergeSortedSequences(source1, source2) {
   // const arr = [];
-  // let arr1 = source1();
-  // let arr2 = source2();
+  // const arr1 = source1();
+  // const arr2 = source2();
   // while(true){
   //   const result1 = arr1.next();
   //   const result2 = arr2.next();
-  //   if (!result1.done){arr.push(result1.value);}
-  //   if (!result2.done){arr.push(result2.value);}
-  //   yield* arr.sort((a,b)=>b-a);
+  //   console.log(result1);
+  //   console.log(result2);
+  //   if(result1 && result2) {
+  //         (result1>result2) ? arr.concat([result1,result2]) : arr.concat([result2,result1])
+  //       } else if (result1 && !result2) {arr.push(result1);
+  //           }else {arr.push(result2)}
+  //   yield* arr;
   //   if (result1.done && result2.done) break;
   // }
   throw new Error('Not implemented');
