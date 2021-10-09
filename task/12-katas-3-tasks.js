@@ -186,15 +186,34 @@ function UrlShortener() {
 
 UrlShortener.prototype = {
   encode(url) {
-    throw new Error('Not implemented');
-    // const asciArr = url.split('').map((el => el.charCodeAt(0))).join('');
-    // return parseInt(asciArr, 10);
+    let newString = '',
+      char, nextChar, combinedCharCode;
+    for (let i = 0; i < url.length; i += 2) {
+      char = url.charCodeAt(i);
+      nextChar = url.charCodeAt(i + 1) - 31;
+      combinedCharCode = char + '' + nextChar.toLocaleString('en', {
+        minimumIntegerDigits: 2
+      });
+      newString += String.fromCharCode(parseInt(combinedCharCode, 10));
+    }
+    return newString;
   },
 
   decode(code) {
-    throw new Error('Not implemented');
-    // const charcodeArr= parseInt(code, 10).toString(10).match(/.{1,2}/g).map(e=>Number(e));
-    // return String.fromCharCode(charcodeArr);
+    let newString = '',
+      char, codeStr, firstCharCode, lastCharCode;
+    for (let i = 0; i < code.length; i++) {
+      char = code.charCodeAt(i);
+      if (char > 132) {
+        codeStr = char.toString(10);
+        firstCharCode = parseInt(codeStr.substring(0, codeStr.length - 2), 10);
+        lastCharCode = parseInt(codeStr.substring(codeStr.length - 2, codeStr.length), 10) + 31;
+        newString += String.fromCharCode(firstCharCode) + String.fromCharCode(lastCharCode);
+      } else {
+        newString += code.charAt(i);
+      }
+    }
+    return newString;
   }
 };
 
