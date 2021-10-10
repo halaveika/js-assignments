@@ -237,7 +237,41 @@ function getPokerHandRank(hand) {
  *    '+-------------+\n'
  */
 function* getFigureRectangles(figure) {
-  throw new Error('Not implemented');
+  const result =[];
+  const parsedArr = figure.match(/\|(.*)\|/g);
+  if(parsedArr) {
+    parsedArr
+      .map(e=>e.split('|')
+        .slice(1, -1))
+      .map(e=> e.map(i => i.length))
+      .forEach((e, i, arr) => {
+        if(i===0){
+          result.push(e.map(item=>[item, 1]));
+        } else {
+          (result[result.length - 1].every((item, j)=> item[0] === e[j]))
+            ? result[result.length - 1].map(e=>e[1]++) :  result.push(e.map(item=>[item, 1]));
+        }
+      });
+
+    const drawArr = result.flat().map(e => Draw(e));
+    for(let i=0; i < drawArr.length; i++){
+      yield drawArr[i];
+    }
+  } else {
+    const result = Array(figure.match(/[+]/g).length/2 - 1).fill('++\n' + '++\n');
+    for(let i=0; i < result.length; i++){
+      yield result[i];
+    }
+  }
+
+  function Draw(arr){
+    const str = `+${Array(arr[0]).fill('-').join('')}+\n`+
+            Array(arr[1]).fill(`|${Array(arr[0]).fill(' ').join('')}|\n`).join('')+
+          `+${Array(arr[0]).fill('-').join('')}+\n`;
+    return str;
+  }
+
+
 }
 
 module.exports = {
