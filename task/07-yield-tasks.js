@@ -200,8 +200,39 @@ function* depthTraversalTree(root) {
  *           8
  *
  */
+
+
+
 function* breadthTraversalTree(root) {
-  throw new Error('Not implemented');
+//     const node1 = { n: 1 };
+//     const node2 = { n: 2 };
+//     const node3 = { n: 3 };
+//     const node4 = { n: 4 };
+//     const node5 = { n: 5 };
+//     const node6 = { n: 6 };
+//     const node7 = { n: 7 };
+//     const node8 = { n: 8 };
+//     node1.children = [node2, node3, node4];
+//     node2.children = [node5, node6];
+//     node4.children = [node7];
+//     node6.children = [node8];
+
+
+//  const queue = [];
+//  queue.push(root);
+//  const output = [];
+//  while (queue.length) {
+//    const node = this.queue.shift();
+//    if (node.left) {
+//       this.queue.push(node.left);
+//    }
+//    if (node.right) {
+//       this.queue.push(node.right);
+//    }
+//    this.output.push(node.data);
+//  }
+//  return this.output;
+ throw new Error('Not implemented');
 }
 
 
@@ -219,22 +250,22 @@ function* breadthTraversalTree(root) {
  *   [ 1, 3, 5, ... ], [ -1 ] => [ -1, 1, 3, 5, ...]
  */
 function* mergeSortedSequences(source1, source2) {
-  // const arr = [];
-  // const arr1 = source1();
-  // const arr2 = source2();
-  // while(true){
-  //   const result1 = arr1.next();
-  //   const result2 = arr2.next();
-  //   console.log(result1);
-  //   console.log(result2);
-  //   if(result1 && result2) {
-  //         (result1>result2) ? arr.concat([result1,result2]) : arr.concat([result2,result1])
-  //       } else if (result1 && !result2) {arr.push(result1);
-  //           }else {arr.push(result2)}
-  //   yield* arr;
-  //   if (result1.done && result2.done) break;
-  // }
-  throw new Error('Not implemented');
+  const arr1 = source1();
+  const arr2 = source2();
+  while(true){
+    const result1 = arr1.next();
+    const result2 = arr2.next();
+    if(!result1.done && !result2.done ){
+      const arr = [result1.value,result2.value].sort((a,b)=>a-b);
+      yield arr[arr.length - 2];
+      yield arr[arr.length - 1];
+    } else if(!result1.done){
+      yield result1.value;
+    } else  if(!result2.done){
+      yield result2.value;
+    }
+    if (result1.done && result2.done) break;
+  }
 }
 
 module.exports = {

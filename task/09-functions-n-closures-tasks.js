@@ -116,12 +116,12 @@ function memoize(func) {
 function retry(func, attempts) {
   throw new Error('Not implemented');
   // console.log(attempts);
-  // return ()=>{return func().catch(err => {
+  // return ()=>(func().catch(err => {
   //   if (attempts <= 0) {
-  //     throw err;
+  //     throw new Error(err.message);
   //   }
-  //   return retry(func, attempts - 1);
-  // });};
+  //   return retryaer(func, attempts--);
+  // }));
 }
 
 
@@ -195,12 +195,15 @@ function partialUsingArguments(fn) {
  */
 function getIdGeneratorFunction(startFrom) {
   throw new Error('Not implemented');
-//   const id = startFrom;
-//   while (true) {
-//     return function* () {
-//       yield id++;
-//   };
-// }
+  //     let id =startFrom;
+  // return function* (){
+  //   while (true) {
+  //     yield id++;
+  //   };
+
+  // }
+
+
 }
 
 module.exports = {
