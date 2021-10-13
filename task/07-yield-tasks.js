@@ -106,19 +106,19 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-  yield root;
-  const tempArr = [];
-  tempArr.push(...root.children);
-  while (tempArr.length > 0) {
-    const node = tempArr.shift();
-    if (node.children) {
-      tempArr.unshift(...node.children);
-      yield node;
-    } else {
-      yield node;
-    }
-  }
-  // throw new Error('Not implemented');
+  // yield root;
+  // const tempArr = [];
+  // tempArr.push(...root.children);
+  // while (tempArr.length > 0) {
+  //   const node = tempArr.shift();
+  //   if (node.children) {
+  //     tempArr.unshift(...node.children);
+  //     yield node;
+  //   } else {
+  //     yield node;
+  //   }
+  // }
+  throw new Error('Not implemented');
 }
 
 
@@ -149,19 +149,19 @@ function* depthTraversalTree(root) {
 
 
 function* breadthTraversalTree(root) {
-  yield root;
-  const tempArr = [];
-  tempArr.push(...root.children);
-  while (tempArr.length > 0) {
-    const node = tempArr.shift();
-    if (node.children) {
-      tempArr.push(...node.children);
-      yield node;
-    } else {
-      yield node;
-    }
-  }
-  // throw new Error('Not implemented');
+  // yield root;
+  // const tempArr = [];
+  // tempArr.push(...root.children);
+  // while (tempArr.length > 0) {
+  //   const node = tempArr.shift();
+  //   if (node.children) {
+  //     tempArr.push(...node.children);
+  //     yield node;
+  //   } else {
+  //     yield node;
+  //   }
+  // }
+  throw new Error('Not implemented');
 }
 
 
