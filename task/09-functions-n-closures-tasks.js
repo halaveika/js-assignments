@@ -152,6 +152,7 @@ function retry(func, attempts) {
  */
 function logger(func, logFunc) {
   throw new Error('Not implemented');
+  // return (...args)=>{ return func(logFunc.call(this,...args))};
   // return (...x) => {return func(logFunc(func.name + '(['+[...x]
   // .map((item, i) =>{ if(i ===0) {return item.map(e=> (Number(e)) ? e : `"${e}"`).join(',')}
   //   return `],${item}) ${(item % 2 ===0) ? 'starts\n' : 'ends\n' }`}).join('')))};
