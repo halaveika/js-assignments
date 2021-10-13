@@ -106,74 +106,19 @@ function* getFibonacciSequence() {
  *
  */
 function* depthTraversalTree(root) {
-  // yield root;
-  // let i = 0;
-  // while (i < 9){
-  //   const node = root.children[i];
-  //   console.log(root.children[i]);
-  //   if(node.n===2){
-  //     yield node;
-  //     if(node.n===3) {yield node}
-  //       else if(node.n===4) {yield node;
-  //         if(node.n ===5) yield node
-  //       }
-  //   }
-  //     else if(node.n===2){
-  //       yield node
-  //     } else if(node.n===7){
-  //       yield node
-  //       if(node.n===8) {yield node}
-  //     }
-
-  //     }
-
-
-
-
-
-
-
-
-
-
-
-  // const node1 = { n:1 }, node2 = { n:2 }, node3 = { n:3 }, node4 = { n:4 },
-  //       node5 = { n:5 }, node6 = { n:6 }, node7 = { n:7 }, node8 = { n:8 };
-  // node1.children = [ node2, node6, node7 ];
-  // node2.children = [ node3, node4 ];
-  // node4.children = [ node5 ];
-  // node7.children = [ node8 ];
-  // yield node1;
-  // let i = 0;
-  // if (root.children.length > 2){
-  //   while (i < 9){
-  //     const node = root.children[i++];
-  //     console.log(node.n);
-  //     if (node.n===2){node2.children =node.children;yield node2;}
-  //     if (node.n===3){node3.children = node.children;yield node3;}
-  //     if (node.n===4){node4.children = node.children;yield node4;}
-  //     if (node.n===5){node5.children = node.children;yield node5;}
-  //     if (node.n===6){node6.children = node.children;yield node6;}
-  //     if (node.n===7){node7.children = node.children;yield node7;}
-  //     if (node.n===8){node8.children = node.children;yield node8;}
-  //   }
-  // } else {
-  //   let node = root;
-  //   while (i < 9){
-  //     node = node.children[0];
-  //     console.log(i++);
-  //     console.log(node);
-  //     if (node.n===2){node2.children =node.children;yield node2;}
-  //     if (node.n===3){node3.children = node.children;yield node3;}
-  //     if (node.n===4){node4.children = node.children;yield node4;}
-  //     if (node.n===5){node5.children = node.children;yield node5;}
-  //     if (node.n===6){node6.children = node.children;yield node6;}
-  //     if (node.n===7){node7.children = node.children;yield node7;}
-  //     if (node.n===8){node8.children = node.children;yield node8;}
-  //     if (node.n>8){node8.children.push(node.children);yield node8;}
-  //   }
-  // }
-  throw new Error('Not implemented');
+  yield root;
+  const tempArr = [];
+  tempArr.push(...root.children);
+  while (tempArr.length > 0) {
+    const node = tempArr.shift();
+    if (node.children) {
+      tempArr.unshift(...node.children);
+      yield node;
+    } else {
+      yield node;
+    }
+  }
+  // throw new Error('Not implemented');
 }
 
 
@@ -204,35 +149,19 @@ function* depthTraversalTree(root) {
 
 
 function* breadthTraversalTree(root) {
-//     const node1 = { n: 1 };
-//     const node2 = { n: 2 };
-//     const node3 = { n: 3 };
-//     const node4 = { n: 4 };
-//     const node5 = { n: 5 };
-//     const node6 = { n: 6 };
-//     const node7 = { n: 7 };
-//     const node8 = { n: 8 };
-//     node1.children = [node2, node3, node4];
-//     node2.children = [node5, node6];
-//     node4.children = [node7];
-//     node6.children = [node8];
-
-
-//  const queue = [];
-//  queue.push(root);
-//  const output = [];
-//  while (queue.length) {
-//    const node = this.queue.shift();
-//    if (node.left) {
-//       this.queue.push(node.left);
-//    }
-//    if (node.right) {
-//       this.queue.push(node.right);
-//    }
-//    this.output.push(node.data);
-//  }
-//  return this.output;
- throw new Error('Not implemented');
+  yield root;
+  const tempArr = [];
+  tempArr.push(...root.children);
+  while (tempArr.length > 0) {
+    const node = tempArr.shift();
+    if (node.children) {
+      tempArr.push(...node.children);
+      yield node;
+    } else {
+      yield node;
+    }
+  }
+  // throw new Error('Not implemented');
 }
 
 
@@ -256,7 +185,7 @@ function* mergeSortedSequences(source1, source2) {
     const result1 = arr1.next();
     const result2 = arr2.next();
     if(!result1.done && !result2.done ){
-      const arr = [result1.value,result2.value].sort((a,b)=>a-b);
+      const arr = [result1.value, result2.value].sort((a, b)=>a-b);
       yield arr[arr.length - 2];
       yield arr[arr.length - 1];
     } else if(!result1.done){
